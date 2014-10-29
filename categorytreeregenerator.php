@@ -1,27 +1,30 @@
 <?php
-
-/*
-The MIT License (MIT)
-
-Copyright (c) 2014 @fusillicode
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
+/**
+* The MIT License (MIT)
+*
+* Copyright (c) 2014 @fusillicode
+*
+* Permission is hereby granted, free of charge, to any person obtaining a copy
+* of this software and associated documentation files (the "Software"), to deal
+* in the Software without restriction, including without limitation the rights
+* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+* copies of the Software, and to permit persons to whom the Software is
+* furnished to do so, subject to the following conditions:
+*
+* The above copyright notice and this permission notice shall be included in
+* all copies or substantial portions of the Software.
+*
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+* THE SOFTWARE.
+*
+* @author    @fusillicode
+* @copyright Copyright (c) 2014 @fusillicode
+* @license   http://opensource.org/licenses/MIT
 */
 
 if (!defined('_PS_VERSION_')) {
@@ -36,7 +39,7 @@ class CategoryTreeRegenerator extends Module
 		$this->displayName = $this->l('Category Tree Regenerator');
 		$this->meta_title = $this->l('Category Tree Regenerator');
 		$this->description = $this->l('Simply regenerate the category tree.');
-		$this->tab = 'back_office_features';
+		$this->tab = 'administration';
 		$this->version = '1.0';
 		$this->author = 'Gianluca Randazzo';
 		$this->need_instance = 0;
@@ -108,8 +111,9 @@ class CategoryTreeRegenerator extends Module
     return $helper->generateForm($fields_form);
   }
 
-  private function regenerationCategoryTreeForm($id_lang)
+  private function regenerationCategoryTreeForm()
   {
+    $fields_form = array();
     $fields_form[0]['form'] = array(
       'legend' => array(
         'title' => $this->l('Regenerate category tree'),
@@ -141,11 +145,11 @@ class CategoryTreeRegenerator extends Module
   private function displayNotifications($notification_types = array())
   {
     $output = '';
-    foreach ($notification_types as $notification_types_key => $notification_type) {
+    foreach ($notification_types as $notification_type) {
       $notifications = "_{$notification_type}s";
-      foreach ($this->$notifications as $notification_key => $notification) {
+      foreach ($this->$notifications as $notification) {
         $output .= call_user_func_array(
-          array($this, 'display'.ucfirst($notification_type)),
+          array($this, 'display'.Tools::ucfirst($notification_type)),
           array($notification)
         );
       }
